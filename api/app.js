@@ -22,14 +22,29 @@ bcrypt.compare(password, hashed, function(err, result) {
 
 app.get('/', (req, res) => res.status(200).send('Hello World!'))
 
-// app.get('/authors', (request, response) => {
-//     knex('app_authors')
+// app.get('/users', (request, response) => {
+//     knex('users')
 //         .select('*')
 //         .then(authorRecords => {
 //             let responseData = authorRecords.map(author => ({ firstName: author.first_name, lastName: author.last_name}));
 //             response.status(200).send(responseData)
 //         })
 
+// })
+
+// app.get('/login', (request, response) => {
+// })
+
+// app.get('/user', (request, response) => {
+// })
+
+// app.get('/post', (request, response) => {
+// })
+
+// app.get('/login', (request, response) => {
+// })
+
+// app.get('/allpost', (request, response) => {
 // })
 
 module.exports = app;
