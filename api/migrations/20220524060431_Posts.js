@@ -3,9 +3,9 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-    return knex.schema.createTable("Posts", (table) => {
+    return knex.schema.createTable("posts", (table) => {
         table.increments();
-        table.string("user_id", 50)
+        table.integer("user_id").unsigned()
         table.foreign("user_id").references("users.id")
         table.string("title", 50)
         table.string("content", 1000)
@@ -19,10 +19,10 @@ exports.up = function (knex) {
  */
 exports.down = function (knex) {
     return knex.schema
-        .alterTable("users", (table) => {
-            table.dropForeign("users_id")
+        .alterTable("posts", (table) => {
+            table.dropForeign("user_id")
         })
         .then(function () {
-            return knex.schema.dropTableIfExists('Posts');
+            return knex.schema.dropTableIfExists('posts');
         })
 };

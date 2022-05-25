@@ -6,6 +6,6 @@ COPY . /app
 
 EXPOSE 3001
 
-RUN apk add --no-cache make gcc g++ python3 && npm install
+RUN npm install
 
 CMD ["npm", "start"]

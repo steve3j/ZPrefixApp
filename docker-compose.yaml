@@ -43,7 +43,7 @@ services:
       - type: bind
         source: ./api
         target: /app
-    command: npm run start:dev
+    command: npm run start
 
   ui:
     build: ./ui

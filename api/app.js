@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors');
-const bcrypt = require ('bcrypt')
+const bcrypt = require ('bcryptjs')
 const saltRounds = 10
 var password = "Fkdj^45ci@Jad"
 var hashed = ''
