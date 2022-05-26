@@ -24,21 +24,13 @@ import LoggedIn from './LoggedIn';
 
 // const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
-
-
-
-
 const Menu = () => {
 
-    // const navigate = useNavigate();
-    const navHandler = (path) => {
-        // navigate(path)
-    };
 
     const menuItems = [
         {
             label: "All Posts",
-            action: () => { navHandler("/"); },
+            action: '',
             icon: <DynamicFeedIcon />,
         },
     ];
@@ -77,7 +69,7 @@ const Menu = () => {
                     </ListItem>
                     <Divider />
                     {menuItems.map(({ label, action, icon }) => (
-                        <ListItem button key={label} onClick={action}>
+                        <ListItem button key={label} >
                             <ListItemIcon>
                                 <Icon>{icon}</Icon>
                             </ListItemIcon>

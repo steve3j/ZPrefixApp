@@ -23,11 +23,6 @@ import Button from '@mui/material/Button'
 
 const Register = () => {
 
-    // const navigate = useNavigate();
-    const navHandler = (path) => {
-        // navigate(path)
-    };
-
     return (
             <div>
             <ListItem>

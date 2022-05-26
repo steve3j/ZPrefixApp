@@ -23,11 +23,6 @@ import Button from '@mui/material/Button'
 
 const Login = () => {
 
-    // const navigate = useNavigate();
-    const navHandler = (path) => {
-        // navigate(path)
-    };
-
     return (
             <div>
                 <ListItem>
