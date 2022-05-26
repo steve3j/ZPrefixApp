@@ -26,6 +26,10 @@ import LoggedIn from './LoggedIn';
 
 const Menu = () => {
 
+    // const navigate = useNavigate();
+    // const navHandler = (path) => {
+    //     navigate(path)
+    // };
 
     const menuItems = [
         {
@@ -37,10 +41,10 @@ const Menu = () => {
 
     const drawerWidth = 240;
 
-    let loginState = 'login'
+    let loginState = 'loggedIn'
 
     function displayLoginState(state) {
-        if (state === 'login')
+        if (state === 'login') 
             return <Login />
         else if (state === 'loggedIn')
             return <LoggedIn />

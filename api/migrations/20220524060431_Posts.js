@@ -9,7 +9,6 @@ exports.up = function (knex) {
         table.foreign("user_id").references("users.id")
         table.string("title", 50)
         table.string("content", 1000)
-        table.string("password", 50)
     })
 };
 
