@@ -30,12 +30,12 @@ const navHandler = (path) => {
 const menuItems = [
     {
         label: "New Post",
-        action: () => { navHandler("/profile"); },
+        action: () => '' ,
         icon: <PostAddIcon />,
     },
     {
         label: "My Posts",
-        action: () => { navHandler("/"); },
+        action: '',
         icon: <DynamicFeedIcon />,
     },
 ]
@@ -43,9 +43,9 @@ const username = 'sgioja'
 const LoggedIn = () => {
 
     // const navigate = useNavigate();
-    const navHandler = (path) => {
-        // navigate(path)
-    };
+    // const navHandler = (path) => {
+    //     // navigate(path)
+    // };
 
     return (
             <div>
@@ -57,7 +57,7 @@ const LoggedIn = () => {
                 </ListItem>
                 <Divider />
                 {menuItems.map(({ label, action, icon }) => (
-                    <ListItem button key={label} onClick={action}>
+                    <ListItem button key={label}>
                         <ListItemIcon>
                             <Icon>{icon}</Icon>
                         </ListItemIcon>
