@@ -37,12 +37,11 @@ const Menu = () => {
 
     const drawerWidth = 240;
 
-    let loginState = 'loggedIn'
+    let loginState = 'login'
 
     function displayLoginState(state) {
-        if (state === 'login') {
+        if (state === 'login')
             return <Login />
-        }
         else if (state === 'loggedIn')
             return <LoggedIn />
         else if (state === 'register')
