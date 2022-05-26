@@ -29,8 +29,7 @@ const Register = () => {
     };
 
     return (
-        <Box sx={{ overflow: 'auto' }}>
-            <List>
+            <div>
             <ListItem>
                     <TextField
                         required
@@ -80,8 +79,7 @@ const Register = () => {
                         Back
                     </Button>
                 </ListItem>
-            </List>
-        </Box>
+            </div>
     );
 }
 

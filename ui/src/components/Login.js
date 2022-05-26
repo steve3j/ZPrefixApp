@@ -29,8 +29,7 @@ const Login = () => {
     };
 
     return (
-        <Box sx={{ overflow: 'auto' }}>
-            <List>
+            <div>
                 <ListItem>
                     <TextField
                         required
@@ -63,8 +62,7 @@ const Login = () => {
                         Create Account
                     </Button>
                 </ListItem>
-            </List>
-        </Box>
+            </div>
     );
 }
 

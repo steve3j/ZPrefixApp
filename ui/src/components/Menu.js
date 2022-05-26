@@ -65,8 +65,13 @@ const Menu = () => {
         >
             <Box sx={{ overflow: 'auto' }}>
                 <List>
-                    <ListItem>
-                        Bloggy
+                    <ListItem display='flex' sx={{ justifyContent: 'center' }} >
+                        <Box  >
+                            <ListItemText >
+                                <h1>Bloggy</h1>
+                            </ListItemText>
+                        </Box>
+
                     </ListItem>
                     <Divider />
                     {menuItems.map(({ label, action, icon }) => (

@@ -48,8 +48,7 @@ const LoggedIn = () => {
     };
 
     return (
-        <Box sx={{ overflow: 'auto' }}>
-            <List>
+            <div>
                 <ListItem key="username">
                     <ListItemIcon>
                         <Icon><AccountCircleIcon/></Icon>
@@ -74,8 +73,7 @@ const LoggedIn = () => {
                         Log Out
                     </Button>
                 </ListItem>
-            </List>
-        </Box>
+            </div>
     );
 }
 
