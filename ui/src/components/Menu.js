@@ -13,35 +13,77 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
+import { useNavigate } from "react-router";
+import Icon from "@mui/material/Icon";
+import Login from "./Login"
+import Register from './Register';
+import LoggedIn from './LoggedIn';
 
-const drawerWidth = 240;
+
+
+
 
 const Menu = () => {
-  return (
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-        }}
-      >
-        <Box sx={{ overflow: 'auto' }}>
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>          
-        </Box>
-      </Drawer>
-  );
+
+    // const navigate = useNavigate();
+    const navHandler = (path) => {
+        // navigate(path)
+    };
+
+    const menuItems = [
+        {
+            label: "All Posts",
+            action: () => { navHandler("/"); },
+            icon: <DynamicFeedIcon />,
+        },
+    ];
+
+    const drawerWidth = 240;
+
+    let loginState = 'loggedIn'
+
+    function displayLoginState(state) {
+        if (state === 'login') {
+            return <Login />
+        }
+        else if (state === 'loggedIn')
+            return <LoggedIn />
+        else if (state === 'register')
+            return <Register />
+    }
+    return (
+        <Drawer
+            variant="permanent"
+            sx={{
+                width: drawerWidth,
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+            }}
+        >
+            <Box sx={{ overflow: 'auto' }}>
+                <List>
+                    <ListItem>
+                        Bloggy
+                    </ListItem>
+                    <Divider />
+                    {menuItems.map(({ label, action, icon }) => (
+                        <ListItem button key={label} onClick={action}>
+                            <ListItemIcon>
+                                <Icon>{icon}</Icon>
+                            </ListItemIcon>
+                            <ListItemText primary={label} />
+                        </ListItem>
+                    ))}
+                    <Divider />
+                    {displayLoginState(loginState)}
+                    <Divider />
+                </List>
+            </Box>
+        </Drawer>
+    );
 }
 
 export default Menu
