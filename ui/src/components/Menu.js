@@ -22,6 +22,8 @@ import Login from "./Login"
 import Register from './Register';
 import LoggedIn from './LoggedIn';
 
+// const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
+
 
 
 
