@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useContext } from 'react'
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -21,11 +21,13 @@ import Icon from "@mui/material/Icon";
 import Login from "./Login"
 import Register from './Register';
 import LoggedIn from './LoggedIn';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { MenuStateContext } from "../Context/MenuStateContext";
 
 // const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
 const Menu = () => {
-
+    let [menuState, setMenuState] = useState('login')
     // const navigate = useNavigate();
     // const navHandler = (path) => {
     //     navigate(path)
@@ -35,56 +37,58 @@ const Menu = () => {
         {
             label: "All Posts",
             action: '',
-            icon: <DynamicFeedIcon />,
+            icon: <AssignmentIcon />,
         },
     ];
 
     const drawerWidth = 240;
 
-    let loginState = 'loggedIn'
-
     function displayLoginState(state) {
-        if (state === 'login') 
-            return <Login />
-        else if (state === 'loggedIn')
+        // if (state === 'login')
+        //     return <Login />
+        if (state === 'loggedIn')
             return <LoggedIn />
         else if (state === 'register')
             return <Register />
+        else
+            return <Login />
     }
     return (
-        <Drawer
-            variant="permanent"
-            sx={{
-                width: drawerWidth,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-            }}
-        >
-            <Box sx={{ overflow: 'auto' }}>
-                <List>
-                    <ListItem display='flex' sx={{ justifyContent: 'center' }} >
-                        <Box  >
-                            <ListItemText >
-                                <h1>Bloggy</h1>
-                            </ListItemText>
-                        </Box>
+        <MenuStateContext.Provider value={[menuState, setMenuState]}>
+            <Drawer
+                variant="permanent"
+                sx={{
+                    width: drawerWidth,
+                    flexShrink: 0,
+                    [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+                }}
+            >
+                <Box sx={{ overflow: 'auto' }}>
+                    <List>
+                        <ListItem display='flex' sx={{ justifyContent: 'center' }} >
+                            <Box  >
+                                <ListItemText >
+                                    <h1>Bloggy</h1>
+                                </ListItemText>
+                            </Box>
 
-                    </ListItem>
-                    <Divider />
-                    {menuItems.map(({ label, action, icon }) => (
-                        <ListItem button key={label} >
-                            <ListItemIcon>
-                                <Icon>{icon}</Icon>
-                            </ListItemIcon>
-                            <ListItemText primary={label} />
                         </ListItem>
-                    ))}
-                    <Divider />
-                    {displayLoginState(loginState)}
-                    <Divider />
-                </List>
-            </Box>
-        </Drawer>
+                        <Divider />
+                        {menuItems.map(({ label, action, icon }) => (
+                            <ListItem button key={label} >
+                                <ListItemIcon>
+                                    <Icon>{icon}</Icon>
+                                </ListItemIcon>
+                                <ListItemText primary={label} />
+                            </ListItem>
+                        ))}
+                        <Divider />
+                        {displayLoginState(menuState)}
+                        <Divider />
+                    </List>
+                </Box>
+            </Drawer>
+        </MenuStateContext.Provider>
     );
 }
 

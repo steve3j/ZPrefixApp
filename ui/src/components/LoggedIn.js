@@ -21,6 +21,7 @@ import Icon from "@mui/material/Icon";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 // const navigate = useNavigate();
 const navHandler = (path) => {
@@ -36,7 +37,7 @@ const menuItems = [
     {
         label: "My Posts",
         action: '',
-        icon: <DynamicFeedIcon />,
+        icon: <AssignmentIndIcon />,
     },
 ]
 const username = 'sgioja'

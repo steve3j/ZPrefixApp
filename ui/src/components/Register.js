@@ -20,8 +20,10 @@ import { useNavigate } from "react-router";
 import Icon from "@mui/material/Icon";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
+import { MenuStateContext } from "../Context/MenuStateContext";
 
 const Register = () => {
+    const [menuState, setMenuState] = React.useContext(MenuStateContext)
 
     return (
             <div>
@@ -70,6 +72,7 @@ const Register = () => {
                         id="btn-login"
                         variant="outlined"
                         color="error"
+                        onClick={() => setMenuState('login')}
                     >
                         Back
                     </Button>
