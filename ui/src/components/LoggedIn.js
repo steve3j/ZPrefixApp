@@ -22,6 +22,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import { MenuStateContext } from "../Context/MenuStateContext";
 
 // const navigate = useNavigate();
 const navHandler = (path) => {
@@ -42,6 +43,7 @@ const menuItems = [
 ]
 const username = 'sgioja'
 const LoggedIn = () => {
+    const [menuState, setMenuState] = React.useContext(MenuStateContext)
 
     // const navigate = useNavigate();
     // const navHandler = (path) => {
@@ -70,6 +72,7 @@ const LoggedIn = () => {
                     <Button
                         id="btn-logout"
                         variant="contained"
+                        onClick={() => setMenuState('login')}
                     >
                         Log Out
                     </Button>

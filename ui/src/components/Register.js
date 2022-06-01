@@ -63,6 +63,7 @@ const Register = () => {
                     <Button
                         id="btn-login"
                         variant="contained"
+                        onClick={() => setMenuState('loggedIn')}
                     >
                         Create Account
                     </Button>

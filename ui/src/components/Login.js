@@ -47,6 +47,7 @@ const Login = () => {
                     <Button
                         id="btn-login"
                         variant="contained"
+                        onClick={() => setMenuState('loggedIn')}
                     >
                         Login
                     </Button>
