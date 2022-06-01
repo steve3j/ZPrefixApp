@@ -6,7 +6,14 @@ const saltRounds = 10
 var password = "Fkdj^45ci@Jad"
 var hashed = ''
 
-app.use(cors());
+var corsOptions = {
+    origin: "*",
+    methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+    headers: "X-Requested-With,content-type",
+    credentials: true,
+  };
+
+app.use(cors(corsOptions));
 const env = process.env.NODE_ENV || 'development'
 const config = require('./knexfile')[env]
 const knex = require('knex')(config)

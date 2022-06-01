@@ -28,15 +28,18 @@ import { MenuStateContext } from "../Context/MenuStateContext";
 
 const Menu = () => {
     let [menuState, setMenuState] = useState('login')
-    // const navigate = useNavigate();
-    // const navHandler = (path) => {
-    //     navigate(path)
-    // };
+
+    const navigate = useNavigate();
+    const navHandler = (path) => {
+        navigate(path)
+    };
 
     const menuItems = [
         {
             label: "All Posts",
-            action: '',
+            action: () => {
+                navHandler("/")
+            },
             icon: <AssignmentIcon />,
         },
     ];
@@ -75,7 +78,7 @@ const Menu = () => {
                         </ListItem>
                         <Divider />
                         {menuItems.map(({ label, action, icon }) => (
-                            <ListItem button key={label} >
+                            <ListItem button key={label} onClick={action}>
                                 <ListItemIcon>
                                     <Icon>{icon}</Icon>
                                 </ListItemIcon>
