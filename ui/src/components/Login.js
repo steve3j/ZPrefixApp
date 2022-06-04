@@ -35,6 +35,11 @@ const Login = () => {
     const [cookies, setCookie] = useCookies(["name"]);
     const [user, setUser] = React.useContext(UserContext);
 
+    const navigate = useNavigate();
+    const navHandler = (path) => {
+        navigate(path)
+    };
+
     const login = async (e) => {
         e.preventDefault();
         let username = document.getElementById("input-username").value;
@@ -72,7 +77,7 @@ const Login = () => {
                     let payloadString = atob(data.accessToken.split(".")[1]).replaceAll("[", "").replaceAll("]", "");
                     // console.log(payloadString)
                     let payloadData = JSON.parse(payloadString);
-                    console.log('pdata: ', payloadData)
+                    // console.log('pdata: ', payloadData)
                     setCookie("blog-user", data.accessToken);
                     setUser({
                         id: payloadData.id,

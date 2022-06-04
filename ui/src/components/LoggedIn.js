@@ -25,6 +25,7 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { MenuStateContext } from "../Context/MenuStateContext";
 import { UserContext } from "../Context/UserContext";
 import { useCookies } from "react-cookie";
+import { useEffect } from 'react';
 
 
 
@@ -40,6 +41,10 @@ const LoggedIn = () => {
     const navHandler = (path) => {
         navigate(path)
     };
+
+    useEffect(() => {
+        navHandler(`/user/${user.id}/posts`)
+    }, [])
 
     const handleLogout = () => {
         removeCookie("blog-user");

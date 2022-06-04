@@ -3,7 +3,7 @@ const app = express()
 const cors = require('cors');
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 // var password = "Fkdj^45ci@Jad"
 // var hashed = ''
 require("dotenv").config()
@@ -32,32 +32,60 @@ const knex = require('knex')(config)
 
 app.get('/', (req, res) => res.status(200).send('Hello World!'))
 
-app.get('/posts', (request, response) => {
-    knex('posts')
-        .select('*')
-        .then(posts => {
-            let responseData = posts.map(post => ({
-                id: post.id, user_id: post.user_id,
-                title: post.title, content: post.content, creation_date: post.creation_date
-            }))
-            response.status(200).send(responseData)
+app.get('/posts', async (request, response) => {
+    let responseData = await knex('posts')
+        .join("users", "users.id", "=", "posts.user_id")
+        .select(
+            "posts.id",
+            "posts.user_id",
+            "posts.title",
+            "posts.content",
+            "posts.creation_date",
+            "users.id",
+            "users.username"
+        )
+        .then((data) => response.status(200).send(data))
+        .catch((err) => {
+            console.log(err)
+            response.status(500).send("server error")
         })
+
+
+    // .select('*')
+    // .then(posts => {
+    //     let responseData = posts.map(post => ({
+    //         id: post.id, user_id: post.user_id,
+    //         title: post.title, content: post.content, creation_date: post.creation_date
+    //     }))
+    //     response.status(200).send(responseData)
+    // })
 })
 
 app.get('/user/:id/posts', async (request, response) => {
     let id = request.params
-    console.log(id)
+    // console.log(id)
 
-    await knex("posts").where("user_id", "=", id.id)
-    .then((data) => response.status(200).send(data))
-    .catch((err) => {
-        console.log(err)
-        response.status(500).send("server error")
-    })
+    await knex("posts")
+        .join("users", "users.id", "=", "posts.user_id")
+        .select(
+            "posts.id",
+            "posts.user_id",
+            "posts.title",
+            "posts.content",
+            "posts.creation_date",
+            "users.id",
+            "users.username"
+        )
+        .where("user_id", "=", id.id)
+        .then((data) => response.status(200).send(data))
+        .catch((err) => {
+            console.log(err)
+            response.status(500).send("server error")
+        })
 })
 
 app.post("/registration", async (request, response) => {
-    console.log('request: ', request.body)
+    // console.log('request: ', request.body)
     if (
         !request.body
     ) {
@@ -82,7 +110,7 @@ app.post("/registration", async (request, response) => {
 })
 
 app.post("/login", async (request, response) => {
-    console.log('request: ', request.body)
+    // console.log('request: ', request.body)
     if (
         !request.body
     ) {
