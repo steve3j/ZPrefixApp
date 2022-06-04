@@ -44,6 +44,19 @@ app.get('/posts', (request, response) => {
         })
 })
 
+app.get('/user/:id/posts', (request, response) => {
+    knex('posts')
+
+    .select(
+        "users.id",
+        "users.first_name",
+        "users.last_name",
+        "users.username",
+        "users.password"
+    )
+    .where("username", "=", request.body.username)
+})
+
 app.post("/registration", async (request, response) => {
     console.log('request: ', request.body)
     if (
@@ -117,9 +130,6 @@ app.post("/login", async (request, response) => {
 // })
 
 // app.get('/login', (request, response) => {
-// })
-
-// app.get('/user', (request, response) => {
 // })
 
 // app.get('/post', (request, response) => {
