@@ -70,7 +70,7 @@ const LoggedIn = () => {
                 <ListItemIcon>
                     <Icon><AccountCircleIcon /></Icon>
                 </ListItemIcon>
-                <ListItemText primary={username} secondary="logged in" />
+                <ListItemText primary={user.username} secondary="logged in" />
             </ListItem>
             <Divider />
             {menuItems.map(({ label, action, icon }) => (

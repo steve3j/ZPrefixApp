@@ -4,7 +4,7 @@ const config = {
     },
   
     production: {
-      apiUrl: "https://gschool-bloggyzapi.herokuapp.com",
+      apiUrl: "https://bloggyzapi.herokuapp.com",
     },
     test: {
       apiUrl: "",
