@@ -46,17 +46,21 @@ const LoggedIn = () => {
         navHandler(`/user/${user.id}/posts`)
     }, [])
 
-    const handleLogout = () => {
+    async function handleLogout() {
+        removeCookie("blog-user");
+        await removeCookie("blog-user"); //hack to get it to remove cookie??? not 100% sure if this works tbh
+        // console.log(menuState)
         setUser({});
         setMenuState('login')
-        removeCookie("blog-user");
-        // console.log(menuState)
+        navigate('/')
     }
 
     const menuItems = [
         {
             label: "New Post",
-            action: () => '',
+            action: () => {
+                navHandler(`/createPost`)
+            },
             icon: <PostAddIcon />,
         },
         {
