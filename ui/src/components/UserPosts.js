@@ -2,17 +2,25 @@ import Box from '@mui/material/Box'
 import { useState, useContext, useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
+import { useCookies } from "react-cookie";
+import {UserContext } from '../Context/UserContext'
+import {useParams} from "react-router-dom"
+
 
 import config from "../config"
 
 const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
 
-const Posts = () => {
+const UserPosts = () => {
     const [posts, setPosts] = useState([])
+    const [cookies, setCookie] = useCookies(["name"]);
+    const [user, setUser] = useContext(UserContext);
+    const params = useParams()
+    // console.log(params)
 
     useEffect(() => {
-        fetch(`${ApiUrl}/posts`)
+        fetch(`${ApiUrl}/user/${params.id}/posts`)
             .then((res) => {
                 if (res.status === 200) {
                     return res.json()
@@ -45,4 +53,4 @@ const Posts = () => {
     )
 }
 
-export default Posts
+export default UserPosts

@@ -2,6 +2,7 @@ import './App.css';
 import Menu from "./components/Menu"
 import Box from '@mui/material/Box'
 import Posts from './components/Posts'
+import UserPosts from './components/UserPosts'
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { UserContext } from './Context/UserContext';
 import { MenuStateContext } from './Context/MenuStateContext';
@@ -55,19 +56,19 @@ function App() {
   return (
     <UserContext.Provider value={[user, setUser]}>
       <MenuStateContext.Provider value={[menuState, setMenuState]}>
-        <Router>
-          <div className="App">
-            <Box sx={{ display: 'flex ' }}>
-              <Menu />
-              <Box sx={{ flexGrow: 1, p: 3 }}>
-                <Routes>
-                  <Route path="/" element={<Posts />} />
-                  <Route path="/Posts/:id" element={<Posts />} />
-                </Routes>
+          <Router>
+            <div className="App">
+              <Box sx={{ display: 'flex ' }}>
+                <Menu />
+                <Box sx={{ flexGrow: 1, p: 3 }}>
+                  <Routes>
+                    <Route path="/" element={<Posts />} />
+                    <Route path="/user/:id/posts" element={<UserPosts/>} />
+                  </Routes>
+                </Box>
               </Box>
-            </Box>
-          </div>
-        </Router>
+            </div>
+          </Router>
       </MenuStateContext.Provider>
     </UserContext.Provider>
   );

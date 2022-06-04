@@ -57,7 +57,7 @@ const LoggedIn = () => {
         {
             label: "My Posts",
             action: () => {
-                navHandler(`/Posts/:${id}`)
+                navHandler(`/user/${user.id}/posts`)
             },
             icon: <AssignmentIndIcon />,
         },
