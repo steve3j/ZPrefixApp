@@ -58,11 +58,11 @@ const CreatePost = () => {
 
         let errFlag = false
         if (title.length < 1) {
-            setTitleProps({ error: true, label: "Title Required" })
+            setTitleProps({ error: true, label: "title required" })
             errFlag = true
         }
         if (content.length < 1) {
-            setContentProps({ error: true, label: "Content Required" })
+            setContentProps({ error: true, label: "content required" })
             errFlag = true
         }
         if (errFlag) {
@@ -113,10 +113,10 @@ const CreatePost = () => {
                         <h3 textalign='center'>
                             <TextField
                                 onChange={onTitleChange}
-                                {...titleProps}
                                 required
                                 label="title"
                                 id="input-title"
+                                {...titleProps}
                             ></TextField></h3>
                         <div flexbasis='1' id="input-date">{dateHelper(new Date())}</div>
                     </Box>
@@ -125,10 +125,10 @@ const CreatePost = () => {
                     <Typography align="justify">
                         <TextField
                             onChange={onContentChange}
-                            {...contentProps}
                             required
                             label="content"
                             id="input-content" sx={{ marginBottom: '5px', marginTop: '5px' }}
+                            {...contentProps}
                             fullWidth multiline >
                         </TextField>
                     </Typography>
