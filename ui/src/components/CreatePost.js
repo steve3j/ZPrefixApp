@@ -2,35 +2,20 @@ import Box from '@mui/material/Box'
 import { useState, useContext, useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
-import { useCookies } from "react-cookie";
 import { UserContext } from '../Context/UserContext'
-import { useParams } from "react-router-dom"
 import moment from 'moment'
-import { TextField } from '@mui/material';
-
 
 import config from "../config"
 
 const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
 
-const UserPosts = () => {
+const CreatePost = () => {
     const [posts, setPosts] = useState([])
-    const [cookies, setCookie] = useCookies(["name"]);
     const [user, setUser] = useContext(UserContext);
-    const params = useParams()
-    // console.log(params)
-
-    function lengthHelper(inputText) {
-        if (inputText.length > 100) {
-            return inputText.slice(0, 100) + '...'
-        } else {
-            return inputText
-        }
-    }
 
     useEffect(() => {
-        fetch(`${ApiUrl}/user/${params.id}/posts`)
+        fetch(`${ApiUrl}/posts`)
             .then((res) => {
                 if (res.status === 200) {
                     return res.json()
@@ -51,10 +36,8 @@ const UserPosts = () => {
         return m.format('L')
     }
 
-
     return (
         posts.map((post) => {
-            // console.log(post)
             // { console.log(post) }
             return (
                 <Box border="solid" borderRadius='8px' margin='5px'>
@@ -70,8 +53,7 @@ const UserPosts = () => {
                             InputProps={{
                                 disableUnderline: true,
                             }}
-                            fullWidth multiline disabled value={lengthHelper(post.content)}>
-                        </TextField>
+                            fullWidth disabled value={post.content}></TextField>
                     </Typography>
                 </Box>
             )
@@ -80,4 +62,4 @@ const UserPosts = () => {
     )
 }
 
-export default UserPosts
+export default CreatePost

@@ -2,17 +2,37 @@ import Box from '@mui/material/Box'
 import { useState, useContext, useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
+import { useCookies } from "react-cookie";
 import { UserContext } from '../Context/UserContext'
+import { TextField } from '@mui/material';
 import moment from 'moment'
+import { useNavigate } from 'react-router';
+import { Button } from '@mui/material';
+import { Paper} from '@mui/material';
 
 import config from "../config"
 
 const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
 
+
 const Posts = () => {
     const [posts, setPosts] = useState([])
+    const [cookies, setCookie] = useCookies(["name"]);
     const [user, setUser] = useContext(UserContext);
+
+    const navigate = useNavigate();
+    const navHandler = (path) => {
+        navigate(path)
+    };
+
+    function lengthHelper(inputText) {
+        if (inputText.length > 100) {
+            return inputText.slice(0, 100) + '...'
+        } else {
+            return inputText
+        }
+    }
 
     useEffect(() => {
         fetch(`${ApiUrl}/posts`)
@@ -29,6 +49,10 @@ const Posts = () => {
             .catch((err) => console.error(err))
     }, [])
 
+    function action() {
+        navHandler("/")
+    }
+
     function dateHelper(inputDate) {
         // console.log(inputDate)
         let m = moment(inputDate)
@@ -38,23 +62,35 @@ const Posts = () => {
 
     return (
         posts.map((post) => {
-            // { console.log(post) }
+            // {console.log(post)}
             return (
-                <Box border="solid" borderRadius='8px' margin='5px'>
-                    <Box marginLeft='10px' marginRight='10px' display="flex" justifyContent="space-between" alignItems='center'>
-                        <div flexbasis='0'  >Author: {post.username}</div>
-                        <h3 textalign='center'>{post.title}</h3>
-                        <div flexbasis='0' >{dateHelper(post.creation_date)}</div>
-                    </Box>
-                    <Divider />
+                
+                <Box margin='8px' >
+                    <Paper elevation='4'>
+                    <Button  margin='5px' sx={{textTransform:'none' , width:'100%', color:'black', display:'flex', flexDirection: 'column', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box display='flex' sx={{ width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div flexbasis='1'  >Author: {post.username}</div>
+                            <h3 textalign='center'>{post.title}</h3>
+                            <div flexbasis='1' >{dateHelper(post.creation_date)}</div>
+                        </Box>
+                        <Divider sx={{width:'100%'}}/>
 
-                    <Typography margin='5px' align="justify">
-                        <span>{post.content}</span>
-                    </Typography>
-                </Box>
+                        <Typography sx={{width:'100%'}} margin='5px' align="justify">
+                            <TextField variant="standard"
+                                InputProps={{
+                                    disableUnderline: true,
+                                }}
+                                fullWidth multiline disabled value={lengthHelper(post.content)}>
+                            </TextField>
+                        </Typography>
+
+                    </Button>
+                    </Paper>
+                    </Box>
+                    
+                
             )
         })
-
     )
 }
 

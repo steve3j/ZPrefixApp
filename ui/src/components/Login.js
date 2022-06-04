@@ -65,7 +65,7 @@ const Login = () => {
                     if (res.status === 201) {
                         return res.json();
                     } else if (res.status === 403) {
-                        errorMessage = "Incorrect Username and Password.";
+                        errorSpan.innerHTML = "Incorrect Username and/or Password.";
                         throw new Error("Incorrect Username and Password");
                     } else if (res.status === 500) {
                         console.log("status 500");

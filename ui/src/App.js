@@ -8,6 +8,16 @@ import { UserContext } from './Context/UserContext';
 import { MenuStateContext } from './Context/MenuStateContext';
 import { React, useState, useContext, useEffect } from "react";
 import { useCookies } from "react-cookie";
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    text: {
+      disabled: '#black',
+    }
+  },
+});
 
 function App() {
   let [user, setUser] = useState({})
@@ -56,19 +66,22 @@ function App() {
   return (
     <UserContext.Provider value={[user, setUser]}>
       <MenuStateContext.Provider value={[menuState, setMenuState]}>
-          <Router>
-            <div className="App">
-              <Box sx={{ display: 'flex ' }}>
-                <Menu />
-                <Box sx={{ flexGrow: 1, p: 3 }}>
+        <Router>
+          <div className="App">
+            <Box sx={{ display: 'flex ' }}>
+              <Menu />
+              <Box sx={{ flexGrow: 1, p: 3 }}>
+
+                <ThemeProvider theme={theme}>
                   <Routes>
                     <Route path="/" element={<Posts />} />
-                    <Route path="/user/:id/posts" element={<UserPosts/>} />
+                    <Route path="/user/:id/posts" element={<UserPosts />} />
                   </Routes>
-                </Box>
+                </ThemeProvider>
               </Box>
-            </div>
-          </Router>
+            </Box>
+          </div>
+        </Router>
       </MenuStateContext.Provider>
     </UserContext.Provider>
   );

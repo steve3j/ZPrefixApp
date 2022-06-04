@@ -47,9 +47,9 @@ const LoggedIn = () => {
     }, [])
 
     const handleLogout = () => {
-        removeCookie("blog-user");
         setUser({});
         setMenuState('login')
+        removeCookie("blog-user");
         // console.log(menuState)
     }
 

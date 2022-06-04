@@ -61,6 +61,37 @@ app.get('/posts', async (request, response) => {
     // })
 })
 
+app.get('/post/:id', async (request, response) => {
+    let id = request.params
+    let responseData = await knex('posts')
+        .join("users", "users.id", "=", "posts.user_id")
+        .select(
+            "posts.id",
+            "posts.user_id",
+            "posts.title",
+            "posts.content",
+            "posts.creation_date",
+            "users.id",
+            "users.username"
+        )
+        .where("posts.id", "=", id.id)
+        .then((data) => response.status(200).send(data))
+        .catch((err) => {
+            console.log(err)
+            response.status(500).send("server error")
+        })
+
+
+    // .select('*')
+    // .then(posts => {
+    //     let responseData = posts.map(post => ({
+    //         id: post.id, user_id: post.user_id,
+    //         title: post.title, content: post.content, creation_date: post.creation_date
+    //     }))
+    //     response.status(200).send(responseData)
+    // })
+})
+
 app.get('/user/:id/posts', async (request, response) => {
     let id = request.params
     // console.log(id)
@@ -120,8 +151,6 @@ app.post("/login", async (request, response) => {
         !request.body.username || !request.body.password
     ) { return response.status(400).send("missing req info") }
 
-
-
     let user = await knex("users")
         .select(
             "users.id",
@@ -134,6 +163,11 @@ app.post("/login", async (request, response) => {
         .where("username", "=", request.body.username)
 
     try {
+        if (user[0] === undefined) {
+            response.status(403).send("Username not found")
+        }
+        console.log('request.body.password ', request.body.password)
+        console.log('user[0].password ', user[0])
         if (await bcrypt.compare(request.body.password, user[0].password)) {
             const accessToken = jwt.sign(JSON.stringify(user), process.env.ACCESS_TOKEN_SECRET)
 
@@ -145,6 +179,22 @@ app.post("/login", async (request, response) => {
     } catch (err) {
         response.status(500).send(console.log(err))
     }
+
+})
+
+app.post('/post', async (request, response) => {
+    await knex("posts")
+        .insert({
+            user_id: request.body.user_id,
+            title: request.body.title,
+            content: request.body.content,
+            creation_date: request.body.creation_date
+        })
+        .then((data) => response.status(201).json('successfully added post'))
+        .catch((err) => {
+            console.log(err)
+            response.status(500).send("server error")
+        })
 
 })
 
@@ -161,8 +211,7 @@ app.post("/login", async (request, response) => {
 // app.get('/login', (request, response) => {
 // })
 
-// app.get('/post', (request, response) => {
-// })
+
 
 // app.get('/login', (request, response) => {
 // })
