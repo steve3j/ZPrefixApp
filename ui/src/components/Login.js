@@ -72,13 +72,14 @@ const Login = () => {
                     let payloadString = atob(data.accessToken.split(".")[1]).replaceAll("[", "").replaceAll("]", "");
                     // console.log(payloadString)
                     let payloadData = JSON.parse(payloadString);
-                    // console.log('pdata: ', payloadData)
+                    console.log('pdata: ', payloadData)
                     setCookie("blog-user", data.accessToken);
                     setUser({
                         id: payloadData.id,
                         firstName: payloadData.first_name,
                         username: payloadData.last_name,
                         password: payloadData.password,
+                        creation_date: payloadData.creation_date
                     });
                     setMenuState('loggedIn')
                 })

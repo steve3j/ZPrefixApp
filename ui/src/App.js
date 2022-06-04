@@ -21,6 +21,7 @@ function App() {
       firstName: payloadData.first_name,
       username: payloadData.last_name,
       password: payloadData.password,
+      creation_date: payloadData.creation_date
     });
   }
 
@@ -44,6 +45,7 @@ function App() {
         firstName: payloadData.first_name,
         username: payloadData.last_name,
         password: payloadData.password,
+        creation_date: payloadData.creation_date
       });
       // console.log(user)
     }

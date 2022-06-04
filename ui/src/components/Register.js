@@ -48,6 +48,7 @@ const Register = () => {
                 lastName: lastName,
                 username: username,
                 password: password,
+                creation_date: new Date()
             }),
         };
 

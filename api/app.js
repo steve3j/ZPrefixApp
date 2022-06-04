@@ -38,23 +38,22 @@ app.get('/posts', (request, response) => {
         .then(posts => {
             let responseData = posts.map(post => ({
                 id: post.id, user_id: post.user_id,
-                title: post.title, content: post.content
+                title: post.title, content: post.content, creation_date: post.creation_date
             }))
             response.status(200).send(responseData)
         })
 })
 
-app.get('/user/:id/posts', (request, response) => {
-    knex('posts')
+app.get('/user/:id/posts', async (request, response) => {
+    let id = request.params
+    console.log(id)
 
-    .select(
-        "users.id",
-        "users.first_name",
-        "users.last_name",
-        "users.username",
-        "users.password"
-    )
-    .where("username", "=", request.body.username)
+    await knex("posts").where("user_id", "=", id.id)
+    .then((data) => response.status(200).send(data))
+    .catch((err) => {
+        console.log(err)
+        response.status(500).send("server error")
+    })
 })
 
 app.post("/registration", async (request, response) => {
@@ -75,7 +74,8 @@ app.post("/registration", async (request, response) => {
             first_name: request.body.firstName,
             last_name: request.body.lastName,
             username: request.body.username,
-            password: hash
+            password: hash,
+            creation_date: request.body.creation_date
         })
     response.status(201).json('successfully created')
 
@@ -100,7 +100,8 @@ app.post("/login", async (request, response) => {
             "users.first_name",
             "users.last_name",
             "users.username",
-            "users.password"
+            "users.password",
+            "users.creation_date"
         )
         .where("username", "=", request.body.username)
 
