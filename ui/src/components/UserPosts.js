@@ -3,8 +3,9 @@ import { useState, useContext, useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
 import { useCookies } from "react-cookie";
-import {UserContext } from '../Context/UserContext'
-import {useParams} from "react-router-dom"
+import { UserContext } from '../Context/UserContext'
+import { useParams } from "react-router-dom"
+import moment from 'moment'
 
 
 import config from "../config"
@@ -34,15 +35,27 @@ const UserPosts = () => {
             .catch((err) => console.error(err))
     }, [])
 
+    function dateHelper(inputDate){
+        let dateString = ''
+        console.log(inputDate)
+        let m = moment(inputDate)
+        console.log(m)
+        return m.format('L')
+    }
+
 
     return (
         posts.map((post) => {
             // { console.log(post) }
             return (
                 <Box border="solid" borderRadius='8px' margin='5px'>
-                    <h3>{post.title}</h3>
+                    <h3 textAlign='center'>{post.title}</h3>
+                    <Box marginLeft='10px' marginRight='10px' display="flex" justifyContent="space-between" >
+                        <div flexBasis='0'  flexGrow='1'>{user.username}</div>
+                        <div flexBasis='0' flexGrow='1'>{dateHelper(post.creation_date)}</div>
+                    </Box>
                     <Divider />
-                    
+
                     <Typography margin='5px' align="justify">
                         <span>{post.content}</span>
                     </Typography>
