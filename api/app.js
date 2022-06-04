@@ -3,8 +3,10 @@ const app = express()
 const cors = require('cors');
 const bcrypt = require('bcryptjs')
 const saltRounds = 10
+const jwt = require("jsonwebtoken")
 // var password = "Fkdj^45ci@Jad"
 // var hashed = ''
+require("dotenv").config()
 
 var corsOptions = {
     origin: "*",
@@ -55,7 +57,6 @@ app.post("/registration", async (request, response) => {
     ) { return response.status(400).send("missing req info") }
 
     const hash = await bcrypt.hash(request.body.password, saltRounds)
-
     await knex("users")
         .insert({
             first_name: request.body.firstName,
@@ -63,7 +64,45 @@ app.post("/registration", async (request, response) => {
             username: request.body.username,
             password: hash
         })
-    // response.status(201).json('successfully created')
+    response.status(201).json('successfully created')
+
+})
+
+app.post("/login", async (request, response) => {
+    console.log('request: ', request.body)
+    if (
+        !request.body
+    ) {
+        return response.status(400).send("missing body")
+    }
+    if (
+        !request.body.username || !request.body.password
+    ) { return response.status(400).send("missing req info") }
+
+
+
+    let user = await knex("users")
+        .select(
+            "users.id",
+            "users.first_name",
+            "users.last_name",
+            "users.username",
+            "users.password"
+        )
+        .where("username", "=", request.body.username)
+
+    try {
+        if (await bcrypt.compare(request.body.password, user[0].password)) {
+            const accessToken = jwt.sign(JSON.stringify(user), process.env.ACCESS_TOKEN_SECRET)
+
+            response.status(201).send({ accessToken: accessToken })
+        } else {
+            //error, unsuccessful
+            response.status(403).send("Username or pass not correct")
+        }
+    } catch (err) {
+        response.status(500).send(console.log(err))
+    }
 
 })
 
