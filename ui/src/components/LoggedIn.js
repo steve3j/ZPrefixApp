@@ -23,6 +23,8 @@ import Button from '@mui/material/Button'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { MenuStateContext } from "../Context/MenuStateContext";
+import { UserContext } from "../Context/UserContext";
+import { useCookies } from "react-cookie";
 
 
 
@@ -31,11 +33,20 @@ const username = 'sgioja'
 const id = 1
 const LoggedIn = () => {
     const [menuState, setMenuState] = React.useContext(MenuStateContext)
+    let [user, setUser] = React.useContext(UserContext);
+    const [cookies, setCookie, removeCookie] = useCookies(["name"]);
 
     const navigate = useNavigate();
     const navHandler = (path) => {
         navigate(path)
     };
+
+    const handleLogout = () => {
+        removeCookie("blog-user");
+        setUser({});
+        setMenuState('login')
+        console.log(menuState)
+    }
 
     const menuItems = [
         {
@@ -75,7 +86,8 @@ const LoggedIn = () => {
                 <Button
                     id="btn-logout"
                     variant="contained"
-                    onClick={() => setMenuState('login')}
+                    onClick={() => handleLogout()}
+                // onClick={() => setMenuState('login')}
                 >
                     Log Out
                 </Button>

@@ -21,64 +21,111 @@ import Icon from "@mui/material/Icon";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import { MenuStateContext } from "../Context/MenuStateContext";
+import config from '../config';
+
+const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
 const Register = () => {
     const [menuState, setMenuState] = React.useContext(MenuStateContext)
 
+    const navigate = useNavigate();
+
+    const register = (e) => {
+        e.preventDefault()
+        let firstName = document.getElementById("input-firstName").value;
+        let lastName = document.getElementById("input-lastName").value;
+        let username = document.getElementById("input-username").value;
+        let password = document.getElementById("input-password").value;
+
+        let header = {
+            method: "post",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                username: username,
+                password: password,
+            }),
+        };
+
+        fetch(`${ApiUrl}/registration`, header)
+            .then((response) => {
+                if (response.status === 201) {
+                    return response.json();
+                } else {
+                    console.log("code: ", response.status, "\nmessage: ", response.statusText);
+                    return false;
+                }
+            })
+            .then((data) => {
+                if (data) {
+                    setMenuState('login')
+                    // navigate("/");
+                }
+            })
+            .catch((err) => {
+                throw err;
+            });
+    }
+
     return (
-            <div>
+        <div>
             <ListItem>
-                    <TextField
-                        required
-                        id="input-firstName"
-                        variant="outlined"
-                        label="first name"
-                    />
-                </ListItem>
-                <ListItem>
-                    <TextField
-                        required
-                        id="input-lastName"
-                        variant="outlined"
-                        label="last name"
-                    />
-                </ListItem>
-                <ListItem>
-                    <TextField
-                        required
-                        id="input-username"
-                        variant="outlined"
-                        label="username"
-                    />
-                </ListItem>
-                <ListItem>
-                    <TextField
-                        required
-                        id="input-password"
-                        variant="outlined"
-                        label="password"
-                    />
-                </ListItem>
-                <ListItem sx={{ display: "flex", justifyContent: "center" }}>
-                    <Button
-                        id="btn-login"
-                        variant="contained"
-                        onClick={() => setMenuState('loggedIn')}
-                    >
-                        Create Account
-                    </Button>
-                </ListItem>
-                <ListItem sx={{ display: "flex", justifyContent: "center" }}>
-                    <Button
-                        id="btn-login"
-                        variant="outlined"
-                        color="error"
-                        onClick={() => setMenuState('login')}
-                    >
-                        Back
-                    </Button>
-                </ListItem>
-            </div>
+                <TextField
+                    required
+                    id="input-firstName"
+                    variant="outlined"
+                    label="first name"
+                />
+            </ListItem>
+            <ListItem>
+                <TextField
+                    required
+                    id="input-lastName"
+                    variant="outlined"
+                    label="last name"
+                />
+            </ListItem>
+            <ListItem>
+                <TextField
+                    required
+                    id="input-username"
+                    variant="outlined"
+                    label="username"
+                />
+            </ListItem>
+            <ListItem>
+                <TextField
+                    required
+                    id="input-password"
+                    variant="outlined"
+                    label="password"
+                />
+            </ListItem>
+            <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                    id="btn-create-account"
+                    variant="contained"
+                    // onClick={() => setMenuState('loggedIn')}
+                    onClick={(e) => register(e)}
+                >
+                    Create Account
+                </Button>
+            </ListItem>
+            <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                    id="btn-back"
+                    variant="outlined"
+                    color="error"
+                    onClick={() => setMenuState('login')}
+                >
+                    Back
+                </Button>
+            </ListItem>
+        </div>
     );
 }
 

@@ -27,7 +27,7 @@ import { MenuStateContext } from "../Context/MenuStateContext";
 // const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
 const Menu = () => {
-    let [menuState, setMenuState] = useState('login')
+    let [menuState, setMenuState] = React.useContext(MenuStateContext)
 
     const navigate = useNavigate();
     const navHandler = (path) => {
@@ -57,41 +57,40 @@ const Menu = () => {
             return <Login />
     }
     return (
-        <MenuStateContext.Provider value={[menuState, setMenuState]}>
-            <Drawer
-                variant="permanent"
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-                }}
-            >
-                <Box sx={{ overflow: 'auto' }}>
-                    <List>
-                        <ListItem display='flex' sx={{ justifyContent: 'center' }} >
-                            <Box  >
-                                <ListItemText >
-                                    <h1>Bloggy</h1>
-                                </ListItemText>
-                            </Box>
 
+        <Drawer
+            variant="permanent"
+            sx={{
+                width: drawerWidth,
+                flexShrink: 0,
+                [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+            }}
+        >
+            <Box sx={{ overflow: 'auto' }}>
+                <List>
+                    <ListItem display='flex' sx={{ justifyContent: 'center' }} >
+                        <Box  >
+                            <ListItemText >
+                                <h1>Bloggy</h1>
+                            </ListItemText>
+                        </Box>
+
+                    </ListItem>
+                    <Divider />
+                    {menuItems.map(({ label, action, icon }) => (
+                        <ListItem button key={label} onClick={action}>
+                            <ListItemIcon>
+                                <Icon>{icon}</Icon>
+                            </ListItemIcon>
+                            <ListItemText primary={label} />
                         </ListItem>
-                        <Divider />
-                        {menuItems.map(({ label, action, icon }) => (
-                            <ListItem button key={label} onClick={action}>
-                                <ListItemIcon>
-                                    <Icon>{icon}</Icon>
-                                </ListItemIcon>
-                                <ListItemText primary={label} />
-                            </ListItem>
-                        ))}
-                        <Divider />
-                        {displayLoginState(menuState)}
-                        <Divider />
-                    </List>
-                </Box>
-            </Drawer>
-        </MenuStateContext.Provider>
+                    ))}
+                    <Divider />
+                    {displayLoginState(menuState)}
+                    <Divider />
+                </List>
+            </Box>
+        </Drawer>
     );
 }
 

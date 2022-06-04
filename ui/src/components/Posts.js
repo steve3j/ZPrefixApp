@@ -29,7 +29,7 @@ const Posts = () => {
 
     return (
         posts.map((post) => {
-            { console.log(post) }
+            // { console.log(post) }
             return (
                 <Box border="solid" borderRadius='8px' margin='5px'>
                     <h3>{post.title}</h3>
