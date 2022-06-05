@@ -156,6 +156,7 @@ const ViewEditPost = () => {
                 if (data) {
                     // console.log(data)
                     navHandler(`/post/${post[0].id}`)
+                    editButtonHelper()
                 }
             })
             .catch((err) => {
