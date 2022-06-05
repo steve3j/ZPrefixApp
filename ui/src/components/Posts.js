@@ -8,7 +8,7 @@ import { TextField } from '@mui/material';
 import moment from 'moment'
 import { useNavigate } from 'react-router';
 import { Button } from '@mui/material';
-import { Paper} from '@mui/material';
+import { Paper } from '@mui/material';
 
 import config from "../config"
 
@@ -49,9 +49,6 @@ const Posts = () => {
             .catch((err) => console.error(err))
     }, [])
 
-    function action() {
-        navHandler("/")
-    }
 
     function dateHelper(inputDate) {
         // console.log(inputDate)
@@ -64,31 +61,31 @@ const Posts = () => {
         posts.map((post) => {
             // {console.log(post)}
             return (
-                
+
                 <Box margin='8px' >
                     <Paper elevation='4'>
-                    <Button  margin='5px' sx={{textTransform:'none' , width:'100%', color:'black', display:'flex', flexDirection: 'column', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Box display='flex' sx={{ width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <div flexbasis='1'  >Author: {post.username}</div>
-                            <h3 textalign='center'>{post.title}</h3>
-                            <div flexbasis='1' >{dateHelper(post.creation_date)}</div>
-                        </Box>
-                        <Divider sx={{width:'100%'}}/>
+                        <Button onClick={() => navHandler(`/post/${post.id}`)} margin='5px' sx={{ textTransform: 'none', width: '100%', color: 'black', display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Box display='flex' sx={{ width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div flexbasis='1'  >Author: {post.username}</div>
+                                <h3 textalign='center'>{post.title}</h3>
+                                <div flexbasis='1' >{dateHelper(post.creation_date)}</div>
+                            </Box>
+                            <Divider sx={{ width: '100%' }} />
 
-                        <Typography sx={{width:'100%'}} margin='5px' align="justify">
-                            <TextField variant="standard"
-                                InputProps={{
-                                    disableUnderline: true,
-                                }}
-                                fullWidth multiline disabled value={lengthHelper(post.content)}>
-                            </TextField>
-                        </Typography>
+                            <Typography sx={{ width: '100%' }} margin='5px' align="justify">
+                                <TextField variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                    }}
+                                    fullWidth multiline disabled value={lengthHelper(post.content)}>
+                                </TextField>
+                            </Typography>
 
-                    </Button>
+                        </Button>
                     </Paper>
-                    </Box>
-                    
-                
+                </Box>
+
+
             )
         })
     )

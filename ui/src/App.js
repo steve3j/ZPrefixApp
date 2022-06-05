@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import Posts from './components/Posts'
 import UserPosts from './components/UserPosts'
 import CreatePost from './components/CreatePost';
+import ViewEditPost from './components/ViewEditPost';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { UserContext } from './Context/UserContext';
 import { MenuStateContext } from './Context/MenuStateContext';
@@ -78,6 +79,7 @@ function App() {
                     <Route path="/" element={<Posts />} />
                     <Route path="/user/:id/posts" element={<UserPosts />} />
                     <Route path="/createpost" element={<CreatePost />} />
+                    <Route path="/post/:id" element={<ViewEditPost />} />
                   </Routes>
                 </ThemeProvider>
               </Box>

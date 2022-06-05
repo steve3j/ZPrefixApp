@@ -7,6 +7,9 @@ import { UserContext } from '../Context/UserContext'
 import { useParams } from "react-router-dom"
 import moment from 'moment'
 import { TextField } from '@mui/material';
+import { Button } from '@mui/material';
+import { Paper } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 
 import config from "../config"
@@ -18,8 +21,13 @@ const UserPosts = () => {
     const [posts, setPosts] = useState([])
     const [cookies, setCookie] = useCookies(["name"]);
     const [user, setUser] = useContext(UserContext);
-    const params = useParams()
+    let params = useParams()
     // console.log(params)
+
+    const navigate = useNavigate();
+    const navHandler = (path) => {
+        navigate(path)
+    };
 
     function lengthHelper(inputText) {
         if (inputText.length > 100) {
@@ -57,22 +65,27 @@ const UserPosts = () => {
             // console.log(post)
             // { console.log(post) }
             return (
-                <Box border="solid" borderRadius='8px' margin='5px'>
-                    <Box marginLeft='10px' marginRight='10px' display="flex" justifyContent="space-between" alignItems='center'>
-                        <div flexbasis='0'  >Author: {post.username}</div>
-                        <h3 textalign='center'>{post.title}</h3>
-                        <div flexbasis='0' >{dateHelper(post.creation_date)}</div>
-                    </Box>
-                    <Divider />
+                <Box margin='8px' >
+                    <Paper elevation='4'>
+                        <Button onClick={() => navHandler(`/post/${post.id}`)} margin='5px' sx={{ textTransform: 'none', width: '100%', color: 'black', display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Box display='flex' sx={{ width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div flexbasis='1'  >Author: {post.username}</div>
+                                <h3 textalign='center'>{post.title}</h3>
+                                <div flexbasis='1' >{dateHelper(post.creation_date)}</div>
+                            </Box>
+                            <Divider sx={{ width: '100%' }} />
 
-                    <Typography margin='5px' align="justify">
-                        <TextField variant="standard"
-                            InputProps={{
-                                disableUnderline: true,
-                            }}
-                            fullWidth multiline disabled value={lengthHelper(post.content)}>
-                        </TextField>
-                    </Typography>
+                            <Typography sx={{ width: '100%' }} margin='5px' align="justify">
+                                <TextField variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                    }}
+                                    fullWidth multiline disabled value={lengthHelper(post.content)}>
+                                </TextField>
+                            </Typography>
+
+                        </Button>
+                    </Paper>
                 </Box>
             )
         })
