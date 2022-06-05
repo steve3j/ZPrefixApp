@@ -40,6 +40,48 @@ const ViewEditPost = () => {
     }
 
 
+    function deleteButtonHelper(e) {
+        e.preventDefault()
+        let title = titleProps.value;
+        let content = contentProps.value;
+        let user_id = user.id;
+        let date = post[0].creation_date
+        let postId = post[0].id
+
+        let header = {
+            method: "delete",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                user_id: user_id,
+                title: title,
+                content: content,
+                creation_date: date
+            }),
+        };
+
+        fetch(`${ApiUrl}/post/${postId}`, header)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    console.log("code: ", response.status, "\nmessage: ", response.statusText);
+                    return false;
+                }
+            })
+            .then((data) => {
+                if (data) {
+                    console.log(data)
+                    navHandler(`/user/${user.id}/posts`)
+                    // editButtonHelper()
+                }
+            })
+            .catch((err) => {
+                throw err;
+            });
+    }
 
     function editButtonHelper() {
         if (buttonText === 'Edit') {
@@ -214,7 +256,7 @@ const ViewEditPost = () => {
                     color="error"
                     sx={{ margin: '5px' }}
                     variant='outlined'
-                    onClick={(e) => (e)}
+                    onClick={(e) => deleteButtonHelper(e)}
                     {...deletePermissionProps}>
                     Delete Post
                 </Button>
@@ -222,7 +264,7 @@ const ViewEditPost = () => {
                     id='button-edit'
                     sx={{ margin: '5px', width: '95px' }}
                     variant='contained'
-                    onClick={() => editButtonHelper()}
+                    onClick={(e) => editButtonHelper(e)}
                     {...editPermissionProps}>
                     {buttonText}
                 </Button>

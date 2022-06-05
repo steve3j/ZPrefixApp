@@ -110,6 +110,25 @@ app.put('/post/:id', async (request, response) => {
         })
 })
 
+app.delete('/post/:id', async (request, response) => {
+    let id = request.params
+    if (
+        !request.body
+    ) {
+        return response.status(400).send("missing body")
+    }
+
+    await knex("posts")
+        .del()
+        .where("posts.id", "=", id.id)
+        .returning('*')
+        .then((data) => response.status(200).send(data))
+        .catch((err) => {
+            console.log(err)
+            response.status(500).send("server error")
+        })
+})
+
 app.get('/user/:id/posts', async (request, response) => {
     let id = request.params
     // console.log(id)
