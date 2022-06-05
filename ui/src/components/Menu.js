@@ -23,6 +23,8 @@ import Register from './Register';
 import LoggedIn from './LoggedIn';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { MenuStateContext } from "../Context/MenuStateContext";
+import { ImageList } from '@mui/material';
+import { ImageListItem } from '@mui/material';
 
 // const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
@@ -67,16 +69,14 @@ const Menu = () => {
             }}
         >
             <Box sx={{ overflow: 'auto' }}>
-                <List>
-                    <ListItem display='flex' sx={{ justifyContent: 'center' }} >
-                        <Box  >
-                            <ListItemText >
-                                <h1>Bloggy</h1>
-                            </ListItemText>
-                        </Box>
+                <List sx={{padding:'0px'}}>
+                            <ImageListItem >
+                                <img id="bloggyLogoWide" 
+                                src="/bloggyLogoWide.PNG" 
+                                alt="Bloggy"
+                                />
+                            </ImageListItem>
 
-                    </ListItem>
-                    <Divider />
                     {menuItems.map(({ label, action, icon }) => (
                         <ListItem button key={label} onClick={action}>
                             <ListItemIcon>

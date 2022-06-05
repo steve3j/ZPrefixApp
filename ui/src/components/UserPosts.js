@@ -66,13 +66,13 @@ const UserPosts = () => {
             // { console.log(post) }
             return (
                 <Box key={post.id} margin='8px' display='flex' flexGrow='1' minWidth='500px'>
-                    <Paper elevation='4' sx={{display:'flex', flexGrow:'1', minWidth:'500px'}}>
+                    <Paper className='postHeading' elevation='4' sx={{display:'flex', flexGrow:'1', minWidth:'500px'}}>
                         <Button onClick={() => navHandler(`/post/${post.id}`)} margin='5px' 
                         sx={{ textTransform: 'none', width: '100%', color: 'black', display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'flex-start', alignItems: 'center' }}>
                             <Box display='flex' sx={{height:'40px', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <div  flexbasis='1'  >Author: {post.username}</div>
-                                <h3 textalign='center'>{post.title}</h3>
-                                <div flexbasis='1' >{dateHelper(post.creation_date)}</div>
+                                <div className='postAuthor' flexbasis='1'  >Author: {post.username}</div>
+                                <h3 className='postTitle' textalign='center'>{post.title}</h3>
+                                <div className='postDate' flexbasis='1' >{dateHelper(post.creation_date)}</div>
                             </Box>
                             <Divider sx={{ width: '100%' }} />
 

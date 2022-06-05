@@ -106,20 +106,20 @@ const CreatePost = () => {
     return (
         // { console.log(post) }
         <Box sx={{ minWidth: '500px', maxWidth:'820px', display: 'flex', flexGrow: '1', flexDirection:'column'}}>
-            <Paper elevation='4' >
-                <Box  margin='8px' >
+            <Paper className='postHeading' elevation='4' >
+                <Box  marginLeft='8px' marginRight='8px' marginBottom='8px'>
                     <Box display='flex' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div flexbasis='1'  >Author: {user.username}</div>
-                        <h3 textalign='center'>
+                        <div className='postAuthor' flexbasis='1'  >Author: {user.username}</div>
+                        <h3 className='postTitle' textalign='center'>
                             <TextField
-                                inputProps={{ style: { textAlign: 'center', fontWeight: 'bold' } }}
+                                inputProps={{ style: {color:'darkGoldenRod', textTransform: 'uppercase', textAlign: 'center', fontWeight: 'bold' } }}
                                 onChange={onTitleChange}
                                 required
                                 label="title"
                                 id="input-title"
                                 {...titleProps}
                             ></TextField></h3>
-                        <div flexbasis='1' id="input-date">{dateHelper()}</div>
+                        <div className='postDate' flexbasis='1' id="input-date">{dateHelper()}</div>
                     </Box>
                     <Divider />
 

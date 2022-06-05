@@ -40,3 +40,24 @@
 h3 {
   margin: 5px
 }
+
+.postDate {
+  color:darkolivegreen;
+}
+
+.postTitle {
+  text-transform: uppercase;
+  font-family: Arial;
+  color:darkgoldenrod !important;
+}
+
+.postAuthor {
+  font-style: italic;
+  font-family: Geneva;
+  color:darkolivegreen;
+}
+
+.postHeading {
+  background-color:#e5f9ed !important
+  /* background-color: #bcf0e0 !important; */
+}

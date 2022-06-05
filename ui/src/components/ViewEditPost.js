@@ -214,15 +214,15 @@ const ViewEditPost = () => {
 
         <Box sx={{ minWidth: '500px', maxWidth:'820px', display: 'flex', flexGrow: '1', flexDirection:'column'}}>
             {/* {console.log('post, ', post)} */}
-            <Paper elevation='4' sx={{ margin: '5px' }} >
-                <Box margin='8px' >
+            <Paper className='postHeading' elevation='4' sx={{ margin: '5px' }} >
+                <Box marginLeft='8px' marginRight='8px' marginBottom='8px' >
                     <Box minHeight='66px' display='flex' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div flexbasis='1'  >Author: {post[0].username}</div>
-                        <h3 textalign='center'>
-                            <TextField
+                        <div className='postAuthor' flexbasis='1'  >Author: {post[0].username}</div>
+                        <h3 className='postTitle' textalign='center'>
+                            <TextField className='postHeading'
                                 variant="standard"
                                 {...titleProps}
-                                inputProps={{ style: { textAlign: 'center', fontWeight: 'bold' } }}
+                                inputProps={{ style: {color:'darkGoldenRod', textTransform: 'uppercase', textAlign: 'center', fontWeight: 'bold' } }}
                                 InputProps={{
                                     disableUnderline: true,
                                 }}
@@ -230,7 +230,7 @@ const ViewEditPost = () => {
                                 required
                                 id="input-title"
                             ></TextField></h3>
-                        <div flexbasis='1' id="input-date">{dateHelper(post[0].creation_date)}</div>
+                        <div className='postDate' flexbasis='1' id="input-date">{dateHelper(post[0].creation_date)}</div>
                     </Box>
                     <Divider />
 
