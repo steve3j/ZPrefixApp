@@ -11,14 +11,15 @@ import { useNavigate } from 'react-router';
 import { useParams } from "react-router-dom"
 
 import config from "../config"
+import PostAdd from '@mui/icons-material/PostAdd';
 
 const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
 
 const ViewEditPost = () => {
-    const [post, setPost] = useState([])
-    const [titleProps, setTitleProps] = useState({})
-    const [contentProps, setContentProps] = useState({})
+    const [post, setPost] = useState([{username:'', title:'', content:'', creation_date:''}])
+    // const [titleProps, setTitleProps] = useState({})
+    // const [contentProps, setContentProps] = useState({})
     const [user, setUser] = useContext(UserContext);
     const params = useParams()
 
@@ -36,21 +37,22 @@ const ViewEditPost = () => {
 
     function onTitleChange(e) {
         if (e.target.value === '') {
-            setTitleProps({ error: true })
+            // setTitleProps({ error: true })
         }
         else {
-            setTitleProps({})
+            // setTitleProps({})
         }
     }
     function onContentChange(e) {
         if (e.target.value === '') {
-            setContentProps({ error: true })
+            // setContentProps({ error: true })
         }
         else {
-            setContentProps({})
+            // setContentProps({})
         }
     }
 
+    //get data
     useEffect(() => {
         fetch(`${ApiUrl}/post/${params.id}`)
             .then((res) => {
@@ -62,10 +64,16 @@ const ViewEditPost = () => {
             })
             .then((data) => {
                 setPost(data)
+                
+                // setTitleProps({ disabled: 'true', label: data[0].title })
+                // setContentProps({ disabled: 'true', label: data[0].content })
+                // console.log(data[0].content)
+
             })
             .catch((err) => console.error(err))
     }, [])
 
+    //edit post
     const editPost = (e) => {
         e.preventDefault()
         let title = document.getElementById("input-title").value;
@@ -75,11 +83,11 @@ const ViewEditPost = () => {
 
         let errFlag = false
         if (title.length < 1) {
-            setTitleProps({ error: true, label: "title required" })
+            // setTitleProps({ error: true, label: "title required" })
             errFlag = true
         }
         if (content.length < 1) {
-            setContentProps({ error: true, label: "content required" })
+            // setContentProps({ error: true, label: "content required" })
             errFlag = true
         }
         if (errFlag) {
@@ -111,7 +119,7 @@ const ViewEditPost = () => {
             })
             .then((data) => {
                 if (data) {
-                    console.log(data)
+                    // console.log(data)
                     navHandler(`/user/${user.id}/posts`)
                 }
             })
@@ -119,23 +127,24 @@ const ViewEditPost = () => {
                 throw err;
             });
     }
-
+    
     return (
-        // { console.log(post) }
+        
         <div>
+            {console.log('post, ', post)}
             <Paper elevation='4' sx={{ margin: '5px' }}>
                 <Box margin='8px' >
                     <Box display='flex' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div flexbasis='1'  >Author: {user.username}</div>
+                        <div flexbasis='1'  >Author: {post[0].username}</div>
                         <h3 textalign='center'>
                             <TextField
                                 onChange={onTitleChange}
                                 required
-                                label="title"
+                                value={post[0].title}
                                 id="input-title"
-                                {...titleProps}
+                                // {...titleProps}
                             ></TextField></h3>
-                        <div flexbasis='1' id="input-date">{dateHelper(new Date())}</div>
+                        <div flexbasis='1' id="input-date">{dateHelper(post[0].creation_date)}</div>
                     </Box>
                     <Divider />
 
@@ -143,9 +152,9 @@ const ViewEditPost = () => {
                         <TextField
                             onChange={onContentChange}
                             required
-                            label="content"
+                            value={post[0].content}
                             id="input-content" sx={{ marginBottom: '5px', marginTop: '5px' }}
-                            {...contentProps}
+                            // {...contentProps}
                             fullWidth multiline >
                         </TextField>
                     </Typography>
@@ -153,7 +162,10 @@ const ViewEditPost = () => {
             </Paper>
             <Box display='flex' justifyContent='center'>
                 <Button sx={{ margin: '5px' }} variant='contained' onClick={(e) => editPost(e)}>
-                    Submit
+                    Edit
+                </Button>
+                <Button color="error" sx={{ margin: '5px' }} variant='outlined' onClick={(e) => editPost(e)}>
+                    Delete
                 </Button>
             </Box>
         </div>

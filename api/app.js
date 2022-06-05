@@ -33,17 +33,14 @@ const knex = require('knex')(config)
 app.get('/', (req, res) => res.status(200).send('Hello World!'))
 
 app.get('/posts', async (request, response) => {
-    let responseData = await knex('posts')
-        .join("users", "users.id", "=", "posts.user_id")
-        .select(
-            "posts.id",
+    await knex("posts")
+        .join('users', 'users.id', 'posts.user_id')
+        .select("posts.id",
             "posts.user_id",
             "posts.title",
             "posts.content",
             "posts.creation_date",
-            "users.id",
-            "users.username"
-        )
+            "users.username")
         .then((data) => response.status(200).send(data))
         .catch((err) => {
             console.log(err)
@@ -63,17 +60,14 @@ app.get('/posts', async (request, response) => {
 
 app.get('/post/:id', async (request, response) => {
     let id = request.params
-    let responseData = await knex('posts')
-        .join("users", "users.id", "=", "posts.user_id")
-        .select(
-            "posts.id",
+    await knex("posts")
+        .join('users', 'users.id', 'posts.user_id')
+        .select("posts.id",
             "posts.user_id",
             "posts.title",
             "posts.content",
             "posts.creation_date",
-            "users.id",
-            "users.username"
-        )
+            "users.username")
         .where("posts.id", "=", id.id)
         .then((data) => response.status(200).send(data))
         .catch((err) => {
@@ -97,16 +91,27 @@ app.get('/user/:id/posts', async (request, response) => {
     // console.log(id)
 
     await knex("posts")
-        .join("users", "users.id", "=", "posts.user_id")
-        .select(
-            "posts.id",
+        .join('users', 'users.id', 'posts.user_id')
+        .select("posts.id",
             "posts.user_id",
             "posts.title",
             "posts.content",
             "posts.creation_date",
-            "users.id",
-            "users.username"
-        )
+            "users.username")
+        // .where({ user_id: id.id })
+
+        // await knex("posts")
+        // .join("users", "users.id", '=', "posts.user_id")
+        //     .select(
+        //         "posts.id",
+        //         "posts.user_id",
+        //         "posts.title",
+        //         "posts.content",
+        //         "posts.creation_date",
+        //         "users.id",
+        //         "users.username"
+        //     )
+
         .where("user_id", "=", id.id)
         .then((data) => response.status(200).send(data))
         .catch((err) => {

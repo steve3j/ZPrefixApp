@@ -23,6 +23,7 @@ const Posts = () => {
 
     const navigate = useNavigate();
     const navHandler = (path) => {
+        // console.log(path)
         navigate(path)
     };
 
@@ -62,7 +63,7 @@ const Posts = () => {
             // {console.log(post)}
             return (
 
-                <Box margin='8px' >
+                <Box key={post.id} margin='8px' >
                     <Paper elevation='4'>
                         <Button onClick={() => navHandler(`/post/${post.id}`)} margin='5px' sx={{ textTransform: 'none', width: '100%', color: 'black', display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Box display='flex' sx={{ width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
