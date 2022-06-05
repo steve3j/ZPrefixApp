@@ -55,7 +55,9 @@ const Posts = () => {
         // console.log(inputDate)
         let m = moment(inputDate)
         // console.log(m)
-        return m.format('L')
+        console.log(inputDate)
+        console.log(m)
+        return m.utc().format("L");
     }
 
     return (
@@ -80,6 +82,14 @@ const Posts = () => {
                                     }}
                                     fullWidth multiline disabled value={lengthHelper(post.content)}>
                                 </TextField>
+                                <div id='debug'>
+                                    post.title: {post.title}
+                                    <br/>
+                                    post.id: {post.id}<br/>
+                                    post.user_id: {post.user_id}<br/>
+                                    post.creation_date: {post.creation_date}<br/>
+                                    post.content: {post.content}
+                                </div>
                             </Typography>
 
                         </Button>

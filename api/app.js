@@ -41,6 +41,7 @@ app.get('/posts', async (request, response) => {
             "posts.content",
             "posts.creation_date",
             "users.username")
+        .orderBy('creation_date', 'desc')
         .then((data) => response.status(200).send(data))
         .catch((err) => {
             console.log(err)
@@ -76,6 +77,7 @@ app.get('/post/:id', async (request, response) => {
         })
 
 
+
     // .select('*')
     // .then(posts => {
     //     let responseData = posts.map(post => ({
@@ -84,6 +86,28 @@ app.get('/post/:id', async (request, response) => {
     //     }))
     //     response.status(200).send(responseData)
     // })
+})
+
+app.put('/post/:id', async (request, response) => {
+    let id = request.params
+    if (
+        !request.body
+    ) {
+        return response.status(400).send("missing body")
+    }
+    if (
+        !request.body.content || !request.body.title
+    ) { return response.status(400).send("missing req info") }
+
+    await knex("posts")
+        .update(request.body)
+        .where("posts.id", "=", id.id)
+        .returning('*')
+        .then((data) => response.status(200).send(data))
+        .catch((err) => {
+            console.log(err)
+            response.status(500).send("server error")
+        })
 })
 
 app.get('/user/:id/posts', async (request, response) => {
@@ -98,6 +122,7 @@ app.get('/user/:id/posts', async (request, response) => {
             "posts.content",
             "posts.creation_date",
             "users.username")
+        .orderBy('creation_date', 'desc')
         // .where({ user_id: id.id })
 
         // await knex("posts")

@@ -56,7 +56,7 @@ const UserPosts = () => {
         // console.log(inputDate)
         let m = moment(inputDate)
         // console.log(m)
-        return m.format('L')
+        return m.utc().format('L')
     }
 
 

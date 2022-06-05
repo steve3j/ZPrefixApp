@@ -20,6 +20,10 @@ const ViewEditPost = () => {
     const [post, setPost] = useState([{ username: '', title: '', content: '', creation_date: '' }])
     const [titleProps, setTitleProps] = useState({})
     const [contentProps, setContentProps] = useState({})
+    const [editPermissionProps, setEditPermissionProps] = useState({ disabled: true })
+    const [deletePermissionProps, setDeletePermissionProps] = useState({ disabled: true })
+    const [submitPermissionProps, setSubmitPermissionProps] = useState({ disabled: true })
+    const [buttonText, setButtonText] = useState('Edit')
     const [user, setUser] = useContext(UserContext);
     const params = useParams()
 
@@ -32,23 +36,42 @@ const ViewEditPost = () => {
         // console.log(inputDate)
         let m = moment(inputDate)
         // console.log(m)
-        return m.format('L')
+        return m.utc().format('L')
+    }
+
+    function editButtonHelper() {
+        if (buttonText === 'Edit') {
+            setButtonText('Cancel')
+            setSubmitPermissionProps({ disabled: false })
+            setDeletePermissionProps({ disabled: true })
+            setEditPermissionProps({ variant: 'outlined' })
+            setContentProps({...contentProps, variant: 'outlined', disabled: false })
+            setTitleProps({...titleProps, variant: 'outlined', disabled: false})
+        } else {
+            setButtonText('Edit')
+            setSubmitPermissionProps({ disabled: true })
+            setDeletePermissionProps({ disabled: false })
+            setEditPermissionProps({ variant: 'contained' })
+            setContentProps({...contentProps, variant: 'standard', disabled: true })
+            setTitleProps({...titleProps, variant: 'standard', disabled: true})
+        }
     }
 
     function onTitleChange(e) {
         if (e.target.value === '') {
-            setTitleProps({ error: true })
+            
+            setTitleProps({...titleProps, error: true, value: e.target.value })
         }
         else {
-            setTitleProps({})
+            setTitleProps({...titleProps, error:false, value: e.target.value})
         }
     }
     function onContentChange(e) {
         if (e.target.value === '') {
-            setContentProps({ error: true })
+            setContentProps({...contentProps, error: true, value: e.target.value })
         }
         else {
-            setContentProps({})
+            setContentProps({...contentProps, error:false, value: e.target.value})
         }
     }
 
@@ -64,9 +87,21 @@ const ViewEditPost = () => {
             })
             .then((data) => {
                 setPost(data)
+                console.log(post)
 
-                setTitleProps({ disabled: 'true', value: data[0].title })
-                setContentProps({ disabled: 'true', value: data[0].content })
+                if (buttonText !== 'Cancel') {
+                    setTitleProps({ ...titleProps, disabled: true, value: data[0].title })
+                    setContentProps({...contentProps, disabled: true, value: data[0].content })
+                }
+
+                if (user.id === data[0].user_id) {
+                    setEditPermissionProps({ disabled: false })
+                    setDeletePermissionProps({ disabled: false })
+                }
+                else {
+                    setEditPermissionProps({ disabled: true })
+                    setDeletePermissionProps({ disabled: true })
+                }
                 // console.log(data[0].content)
 
             })
@@ -74,11 +109,10 @@ const ViewEditPost = () => {
     }, [])
 
     //edit post
-    const editPost = (e) => {
+    const submitPost = (e) => {
         e.preventDefault()
-        let title = document.getElementById("input-title").value;
-        let content = document.getElementById("input-content").value;
-        let date = document.getElementById("input-date").innerHTML;
+        let title = titleProps.value;
+        let content = contentProps.value;
         let user_id = user.id;
 
         let errFlag = false
@@ -95,7 +129,7 @@ const ViewEditPost = () => {
         }
 
         let header = {
-            method: "patch",
+            method: "put",
             mode: "cors",
             headers: {
                 "Content-Type": "application/json",
@@ -104,13 +138,13 @@ const ViewEditPost = () => {
                 user_id: user_id,
                 title: title,
                 content: content,
-                creation_date: date
+                // creation_date: date
             }),
         };
 
-        fetch(`${ApiUrl}/post`, header)
+        fetch(`${ApiUrl}/post/${post[0].id}`, header)
             .then((response) => {
-                if (response.status === 201) {
+                if (response.status === 200) {
                     return response.json();
                 } else {
                     console.log("code: ", response.status, "\nmessage: ", response.statusText);
@@ -120,7 +154,7 @@ const ViewEditPost = () => {
             .then((data) => {
                 if (data) {
                     // console.log(data)
-                    navHandler(`/user/${user.id}/posts`)
+                    navHandler(`/post/${post[0].id}`)
                 }
             })
             .catch((err) => {
@@ -131,7 +165,7 @@ const ViewEditPost = () => {
     return (
 
         <div>
-            {console.log('post, ', post)}
+            {/* {console.log('post, ', post)} */}
             <Paper elevation='4' sx={{ margin: '5px' }}>
                 <Box margin='8px' >
                     <Box display='flex' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
@@ -139,15 +173,14 @@ const ViewEditPost = () => {
                         <h3 textalign='center'>
                             <TextField
                                 variant="standard"
-                                inputProps={{style:{textAlign:'center', fontWeight:'bold'}}}
+                                inputProps={{ style: { textAlign: 'center', fontWeight: 'bold' } }}
                                 InputProps={{
                                     disableUnderline: true,
                                 }}
                                 onChange={onTitleChange}
                                 required
-                                value={post[0].title}
                                 id="input-title"
-                                // {...titleProps}
+                                {...titleProps}
                             ></TextField></h3>
                         <div flexbasis='1' id="input-date">{dateHelper(post[0].creation_date)}</div>
                     </Box>
@@ -161,7 +194,7 @@ const ViewEditPost = () => {
                             }}
                             onChange={onContentChange}
                             required
-                            value={post[0].content}
+                            // value={post[0].content}
                             id="input-content" sx={{ marginBottom: '5px', marginTop: '5px' }}
                             {...contentProps}
                             fullWidth multiline >
@@ -170,18 +203,34 @@ const ViewEditPost = () => {
                 </Box>
             </Paper>
             <Box display='flex' justifyContent='center'>
-                <Button sx={{ margin: '5px' }} variant='contained' onClick={(e) => editPost(e)}>
-                    Edit
+                <Button
+                    id='button-delete'
+                    color="error"
+                    sx={{ margin: '5px' }}
+                    variant='outlined'
+                    onClick={(e) => (e)}
+                    {...deletePermissionProps}>
+                    Delete Post
                 </Button>
-                <Button color="error" sx={{ margin: '5px' }} variant='outlined' onClick={(e) => editPost(e)}>
-                    Delete
+                <Button
+                    id='button-edit'
+                    sx={{ margin: '5px', width: '95px' }}
+                    variant='contained'
+                    onClick={() => editButtonHelper()}
+                    {...editPermissionProps}>
+                    {buttonText}
+                </Button>
+                <Button
+                    id='button-submit'
+                    sx={{ margin: '5px', width: '95px' }}
+                    variant='contained'
+                    onClick={(e) => submitPost(e)}
+                    {...submitPermissionProps}>
+                    Submit
                 </Button>
             </Box>
         </div>
-
     )
-
-
 }
 
 export default ViewEditPost

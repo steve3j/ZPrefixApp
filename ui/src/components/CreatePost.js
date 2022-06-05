@@ -25,11 +25,11 @@ const CreatePost = () => {
         navigate(path)
     };
 
-    function dateHelper(inputDate) {
+    function dateHelper() {
         // console.log(inputDate)
-        let m = moment(inputDate)
+        let m = moment().utc()
         // console.log(m)
-        return m.format('L')
+        return m.format("L")
     }
 
     function onTitleChange(e) {
@@ -119,7 +119,7 @@ const CreatePost = () => {
                                 id="input-title"
                                 {...titleProps}
                             ></TextField></h3>
-                        <div flexbasis='1' id="input-date">{dateHelper(new Date())}</div>
+                        <div flexbasis='1' id="input-date">{dateHelper()}</div>
                     </Box>
                     <Divider />
 
