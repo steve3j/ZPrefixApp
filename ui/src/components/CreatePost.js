@@ -94,7 +94,7 @@ const CreatePost = () => {
             })
             .then((data) => {
                 if (data) {
-                    console.log(data)
+                    // console.log(data)
                     navHandler(`/user/${user.id}/posts`)
                 }
             })

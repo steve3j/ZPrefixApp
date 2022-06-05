@@ -73,7 +73,7 @@ const ViewEditPost = () => {
             })
             .then((data) => {
                 if (data) {
-                    console.log(data)
+                    // console.log(data)
                     navHandler(`/user/${user.id}/posts`)
                     // editButtonHelper()
                 }
@@ -132,7 +132,7 @@ const ViewEditPost = () => {
             })
             .then((data) => {
                 setPost(data)
-                console.log(post)
+                // console.log(post)
 
                 if (buttonText !== 'Cancel') {
                     setTitleProps({ ...titleProps, disabled: true, value: data[0].title })
