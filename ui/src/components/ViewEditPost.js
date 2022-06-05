@@ -39,6 +39,8 @@ const ViewEditPost = () => {
         return m.utc().format('L')
     }
 
+
+
     function editButtonHelper() {
         if (buttonText === 'Edit') {
             setButtonText('Cancel')
@@ -73,7 +75,7 @@ const ViewEditPost = () => {
         else {
             setContentProps({ ...contentProps, error: false, value: e.target.value })
         }
-        console.log(e.target.value)
+        // console.log(e.target.value)
     }
 
     //get data
@@ -93,21 +95,23 @@ const ViewEditPost = () => {
                 if (buttonText !== 'Cancel') {
                     setTitleProps({ ...titleProps, disabled: true, value: data[0].title })
                     setContentProps({ ...contentProps, disabled: true, value: data[0].content })
+
+                    if (user.id === data[0].user_id) {
+                        setEditPermissionProps({ disabled: false })
+                        setDeletePermissionProps({ disabled: false })
+                    }
+                    else {
+                        setEditPermissionProps({ disabled: true })
+                        setDeletePermissionProps({ disabled: true })
+                    }
                 }
 
-                if (user.id === data[0].user_id) {
-                    setEditPermissionProps({ disabled: false })
-                    setDeletePermissionProps({ disabled: false })
-                }
-                else {
-                    setEditPermissionProps({ disabled: true })
-                    setDeletePermissionProps({ disabled: true })
-                }
+                
                 // console.log(data[0].content)
 
             })
             .catch((err) => console.error(err))
-    }, [])
+    }, [buttonText])
 
     //edit post
     const submitPost = (e) => {

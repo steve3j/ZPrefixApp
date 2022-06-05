@@ -55,8 +55,8 @@ const Posts = () => {
         // console.log(inputDate)
         let m = moment(inputDate)
         // console.log(m)
-        console.log(inputDate)
-        console.log(m)
+        // console.log(inputDate)
+        // console.log(m)
         return m.utc().format("L");
     }
 
