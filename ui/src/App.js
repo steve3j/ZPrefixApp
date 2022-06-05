@@ -70,9 +70,12 @@ function App() {
       <MenuStateContext.Provider value={[menuState, setMenuState]}>
         <Router>
           <div className="App">
-            <Box sx={{ display: 'flex ' }}>
+            <Box sx={{ display: 'flex' }}>
               <Menu />
-              <Box sx={{ flexGrow: 1, p: 3 }}>
+              <Box sx={{
+                flexGrow: 2, p: 3, display: 'flex', flexWrap: 'wrap',
+                justifyContent: 'space-evenly',
+              }}>
 
                 <ThemeProvider theme={theme}>
                   <Routes>

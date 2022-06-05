@@ -212,9 +212,9 @@ const ViewEditPost = () => {
 
     return (
 
-        <div>
+        <Box sx={{ minWidth: '500px', maxWidth:'820px', display: 'flex', flexGrow: '1', flexDirection:'column'}}>
             {/* {console.log('post, ', post)} */}
-            <Paper elevation='4' sx={{ margin: '5px' }}>
+            <Paper elevation='4' sx={{ margin: '5px' }} >
                 <Box margin='8px' >
                     <Box minHeight='66px' display='flex' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
                         <div flexbasis='1'  >Author: {post[0].username}</div>
@@ -244,7 +244,7 @@ const ViewEditPost = () => {
                             onChange={(e) => onContentChange(e)}
                             required
                             // value={post[0].content}
-                            id="input-content" sx={{ marginBottom: '5px', marginTop: '5px' }}
+                            id="input-content" sx={{ marginTop: '10px' }}
                             fullWidth multiline >
                         </TextField>
                     </Typography>
@@ -277,7 +277,7 @@ const ViewEditPost = () => {
                     Submit
                 </Button>
             </Box>
-        </div>
+        </Box>
     )
 }
 

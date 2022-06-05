@@ -105,9 +105,9 @@ const CreatePost = () => {
 
     return (
         // { console.log(post) }
-        <div>
-            <Paper elevation='4' sx={{ margin: '5px' }}>
-                <Box margin='8px' >
+        <Box sx={{ minWidth: '500px', maxWidth:'820px', display: 'flex', flexGrow: '1', flexDirection:'column'}}>
+            <Paper elevation='4' >
+                <Box  margin='8px' >
                     <Box display='flex' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
                         <div flexbasis='1'  >Author: {user.username}</div>
                         <h3 textalign='center'>
@@ -128,7 +128,7 @@ const CreatePost = () => {
                             onChange={onContentChange}
                             required
                             label="content"
-                            id="input-content" sx={{ marginBottom: '5px', marginTop: '5px' }}
+                            id="input-content" sx={{marginTop: '8px' }}
                             {...contentProps}
                             fullWidth multiline >
                         </TextField>
@@ -136,11 +136,11 @@ const CreatePost = () => {
                 </Box>
             </Paper>
             <Box display='flex' justifyContent='center'>
-                <Button sx={{ margin: '5px' }} variant='contained' onClick={(e) => createNewPost(e)}>
+                <Button sx={{ margin: '10px' }} variant='contained' onClick={(e) => createNewPost(e)}>
                     Submit
                 </Button>
             </Box>
-        </div>
+        </Box>
 
     )
 

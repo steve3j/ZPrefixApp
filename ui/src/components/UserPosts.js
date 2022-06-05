@@ -65,23 +65,32 @@ const UserPosts = () => {
             // console.log(post)
             // { console.log(post) }
             return (
-                <Box key={post.id} margin='8px' >
-                    <Paper elevation='4'>
-                        <Button onClick={() => navHandler(`/post/${post.id}`)} margin='5px' sx={{ textTransform: 'none', width: '100%', color: 'black', display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Box display='flex' sx={{ width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <div flexbasis='1'  >Author: {post.username}</div>
+                <Box key={post.id} margin='8px' display='flex' flexGrow='1' minWidth='500px'>
+                    <Paper elevation='4' sx={{display:'flex', flexGrow:'1', minWidth:'500px'}}>
+                        <Button onClick={() => navHandler(`/post/${post.id}`)} margin='5px' 
+                        sx={{ textTransform: 'none', width: '100%', color: 'black', display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'flex-start', alignItems: 'center' }}>
+                            <Box display='flex' sx={{height:'40px', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div  flexbasis='1'  >Author: {post.username}</div>
                                 <h3 textalign='center'>{post.title}</h3>
                                 <div flexbasis='1' >{dateHelper(post.creation_date)}</div>
                             </Box>
                             <Divider sx={{ width: '100%' }} />
 
                             <Typography sx={{ width: '100%' }} marginTop='5px' align="justify">
-                                <TextField variant="outlined"
+                                <TextField variant="standard"
                                     InputProps={{
                                         disableUnderline: true,
                                     }}
                                     fullWidth multiline disabled value={lengthHelper(post.content)}>
                                 </TextField>
+                                {/* <div id='debug'>
+                                    post.title: {post.title}
+                                    <br/>
+                                    post.id: {post.id}<br/>
+                                    post.user_id: {post.user_id}<br/>
+                                    post.creation_date: {post.creation_date}<br/>
+                                    post.content: {post.content}
+                                </div> */}
                             </Typography>
 
                         </Button>
