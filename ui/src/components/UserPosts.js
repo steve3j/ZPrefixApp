@@ -75,8 +75,8 @@ const UserPosts = () => {
                             </Box>
                             <Divider sx={{ width: '100%' }} />
 
-                            <Typography sx={{ width: '100%' }} margin='5px' align="justify">
-                                <TextField variant="standard"
+                            <Typography sx={{ width: '100%' }} marginTop='5px' align="justify">
+                                <TextField variant="outlined"
                                     InputProps={{
                                         disableUnderline: true,
                                     }}

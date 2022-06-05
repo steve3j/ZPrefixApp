@@ -75,21 +75,21 @@ const Posts = () => {
                             </Box>
                             <Divider sx={{ width: '100%' }} />
 
-                            <Typography sx={{ width: '100%' }} margin='5px' align="justify">
-                                <TextField variant="standard"
+                            <Typography sx={{ width: '100%' }} marginTop='5px' align="justify">
+                                <TextField variant="outlined"
                                     InputProps={{
                                         disableUnderline: true,
                                     }}
                                     fullWidth multiline disabled value={lengthHelper(post.content)}>
                                 </TextField>
-                                <div id='debug'>
+                                {/* <div id='debug'>
                                     post.title: {post.title}
                                     <br/>
                                     post.id: {post.id}<br/>
                                     post.user_id: {post.user_id}<br/>
                                     post.creation_date: {post.creation_date}<br/>
                                     post.content: {post.content}
-                                </div>
+                                </div> */}
                             </Typography>
 
                         </Button>

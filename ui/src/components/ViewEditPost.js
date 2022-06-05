@@ -45,34 +45,35 @@ const ViewEditPost = () => {
             setSubmitPermissionProps({ disabled: false })
             setDeletePermissionProps({ disabled: true })
             setEditPermissionProps({ variant: 'outlined' })
-            setContentProps({...contentProps, variant: 'outlined', disabled: false })
-            setTitleProps({...titleProps, variant: 'outlined', disabled: false})
+            setContentProps({ ...contentProps,  disabled: false })
+            setTitleProps({ ...titleProps, variant: 'outlined', disabled: false })
         } else {
             setButtonText('Edit')
             setSubmitPermissionProps({ disabled: true })
             setDeletePermissionProps({ disabled: false })
             setEditPermissionProps({ variant: 'contained' })
-            setContentProps({...contentProps, variant: 'standard', disabled: true })
-            setTitleProps({...titleProps, variant: 'standard', disabled: true})
+            setContentProps({ ...contentProps, disabled: true })
+            setTitleProps({ ...titleProps, variant: 'standard', disabled: true })
         }
     }
 
     function onTitleChange(e) {
         if (e.target.value === '') {
-            
-            setTitleProps({...titleProps, error: true, value: e.target.value })
+
+            setTitleProps({ ...titleProps, error: true, value: e.target.value })
         }
         else {
-            setTitleProps({...titleProps, error:false, value: e.target.value})
+            setTitleProps({ ...titleProps, error: false, value: e.target.value })
         }
     }
     function onContentChange(e) {
         if (e.target.value === '') {
-            setContentProps({...contentProps, error: true, value: e.target.value })
+            setContentProps({ ...contentProps, error: true, value: e.target.value })
         }
         else {
-            setContentProps({...contentProps, error:false, value: e.target.value})
+            setContentProps({ ...contentProps, error: false, value: e.target.value })
         }
+        console.log(e.target.value)
     }
 
     //get data
@@ -91,7 +92,7 @@ const ViewEditPost = () => {
 
                 if (buttonText !== 'Cancel') {
                     setTitleProps({ ...titleProps, disabled: true, value: data[0].title })
-                    setContentProps({...contentProps, disabled: true, value: data[0].content })
+                    setContentProps({ ...contentProps, disabled: true, value: data[0].content })
                 }
 
                 if (user.id === data[0].user_id) {
@@ -168,35 +169,35 @@ const ViewEditPost = () => {
             {/* {console.log('post, ', post)} */}
             <Paper elevation='4' sx={{ margin: '5px' }}>
                 <Box margin='8px' >
-                    <Box display='flex' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Box minHeight='66px' display='flex' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
                         <div flexbasis='1'  >Author: {post[0].username}</div>
                         <h3 textalign='center'>
                             <TextField
                                 variant="standard"
+                                {...titleProps}
                                 inputProps={{ style: { textAlign: 'center', fontWeight: 'bold' } }}
                                 InputProps={{
                                     disableUnderline: true,
                                 }}
-                                onChange={onTitleChange}
+                                onChange={(e) => onTitleChange(e)}
                                 required
                                 id="input-title"
-                                {...titleProps}
                             ></TextField></h3>
                         <div flexbasis='1' id="input-date">{dateHelper(post[0].creation_date)}</div>
                     </Box>
                     <Divider />
 
-                    <Typography align="justify">
+                    <Typography minHeight='66px' align="justify">
                         <TextField
-                            variant="standard"
-                            InputProps={{
-                                disableUnderline: true,
-                            }}
-                            onChange={onContentChange}
+                            {...contentProps}
+                            inputProps={{ minHeight: '66px' }}
+                            // InputProps={{
+                            //     disableUnderline: true,
+                            // }}
+                            onChange={(e) => onContentChange(e)}
                             required
                             // value={post[0].content}
                             id="input-content" sx={{ marginBottom: '5px', marginTop: '5px' }}
-                            {...contentProps}
                             fullWidth multiline >
                         </TextField>
                     </Typography>
