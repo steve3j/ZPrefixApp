@@ -112,6 +112,7 @@ const CreatePost = () => {
                         <div flexbasis='1'  >Author: {user.username}</div>
                         <h3 textalign='center'>
                             <TextField
+                                inputProps={{ style: { textAlign: 'center', fontWeight: 'bold' } }}
                                 onChange={onTitleChange}
                                 required
                                 label="title"

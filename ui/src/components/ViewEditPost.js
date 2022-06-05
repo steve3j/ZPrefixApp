@@ -17,9 +17,9 @@ const ApiUrl = config[process.env.REACT_APP_NODE_ENV || "development"].apiUrl;
 
 
 const ViewEditPost = () => {
-    const [post, setPost] = useState([{username:'', title:'', content:'', creation_date:''}])
-    // const [titleProps, setTitleProps] = useState({})
-    // const [contentProps, setContentProps] = useState({})
+    const [post, setPost] = useState([{ username: '', title: '', content: '', creation_date: '' }])
+    const [titleProps, setTitleProps] = useState({})
+    const [contentProps, setContentProps] = useState({})
     const [user, setUser] = useContext(UserContext);
     const params = useParams()
 
@@ -37,18 +37,18 @@ const ViewEditPost = () => {
 
     function onTitleChange(e) {
         if (e.target.value === '') {
-            // setTitleProps({ error: true })
+            setTitleProps({ error: true })
         }
         else {
-            // setTitleProps({})
+            setTitleProps({})
         }
     }
     function onContentChange(e) {
         if (e.target.value === '') {
-            // setContentProps({ error: true })
+            setContentProps({ error: true })
         }
         else {
-            // setContentProps({})
+            setContentProps({})
         }
     }
 
@@ -64,9 +64,9 @@ const ViewEditPost = () => {
             })
             .then((data) => {
                 setPost(data)
-                
-                // setTitleProps({ disabled: 'true', label: data[0].title })
-                // setContentProps({ disabled: 'true', label: data[0].content })
+
+                setTitleProps({ disabled: 'true', value: data[0].title })
+                setContentProps({ disabled: 'true', value: data[0].content })
                 // console.log(data[0].content)
 
             })
@@ -83,11 +83,11 @@ const ViewEditPost = () => {
 
         let errFlag = false
         if (title.length < 1) {
-            // setTitleProps({ error: true, label: "title required" })
+            setTitleProps({ error: true, label: "title required" })
             errFlag = true
         }
         if (content.length < 1) {
-            // setContentProps({ error: true, label: "content required" })
+            setContentProps({ error: true, label: "content required" })
             errFlag = true
         }
         if (errFlag) {
@@ -127,9 +127,9 @@ const ViewEditPost = () => {
                 throw err;
             });
     }
-    
+
     return (
-        
+
         <div>
             {console.log('post, ', post)}
             <Paper elevation='4' sx={{ margin: '5px' }}>
@@ -138,6 +138,11 @@ const ViewEditPost = () => {
                         <div flexbasis='1'  >Author: {post[0].username}</div>
                         <h3 textalign='center'>
                             <TextField
+                                variant="standard"
+                                inputProps={{style:{textAlign:'center', fontWeight:'bold'}}}
+                                InputProps={{
+                                    disableUnderline: true,
+                                }}
                                 onChange={onTitleChange}
                                 required
                                 value={post[0].title}
@@ -150,11 +155,15 @@ const ViewEditPost = () => {
 
                     <Typography align="justify">
                         <TextField
+                            variant="standard"
+                            InputProps={{
+                                disableUnderline: true,
+                            }}
                             onChange={onContentChange}
                             required
                             value={post[0].content}
                             id="input-content" sx={{ marginBottom: '5px', marginTop: '5px' }}
-                            // {...contentProps}
+                            {...contentProps}
                             fullWidth multiline >
                         </TextField>
                     </Typography>
