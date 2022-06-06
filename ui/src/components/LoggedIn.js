@@ -77,7 +77,7 @@ const LoggedIn = () => {
         <div>
             <ListItem key="username">
                 <ListItemIcon>
-                    <Icon><AccountCircleIcon /></Icon>
+                    <Icon className="icon"><AccountCircleIcon /></Icon>
                 </ListItemIcon>
                 <ListItemText primary={user.username} secondary="logged in" />
             </ListItem>
@@ -85,7 +85,7 @@ const LoggedIn = () => {
             {menuItems.map(({ label, action, icon }) => (
                 <ListItem button key={label} onClick={action}>
                     <ListItemIcon>
-                        <Icon>{icon}</Icon>
+                        <Icon className="icon">{icon}</Icon>
                     </ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>

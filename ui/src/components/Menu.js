@@ -79,8 +79,8 @@ const Menu = () => {
 
                     {menuItems.map(({ label, action, icon }) => (
                         <ListItem button key={label} onClick={action}>
-                            <ListItemIcon>
-                                <Icon>{icon}</Icon>
+                            <ListItemIcon >
+                                <Icon className="icon">{icon }</Icon>
                             </ListItemIcon>
                             <ListItemText primary={label} />
                         </ListItem>
